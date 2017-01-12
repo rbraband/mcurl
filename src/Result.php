@@ -106,7 +106,10 @@ class Result {
             foreach ($headers AS $header) {
                 list($name, $value) = array_map('trim', explode(':', $header, 2));
                 $name = strtolower($name);
-                $this->rawHeaders[$name] = $value;
+                if ($name == 'set-cookie')
+                    $this->rawHeaders[$name][] = $value;
+                else 
+                    $this->rawHeaders[$name] = $value;
             }
         }
         return $this->rawHeaders;
